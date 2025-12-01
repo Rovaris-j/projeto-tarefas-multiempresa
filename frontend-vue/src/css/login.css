@@ -1,0 +1,499 @@
+:root {
+  /* Gradiente lilás vibrante com mais contraste para páginas de autenticação */
+  --auth-gradient: linear-gradient(135deg, #d8b4fe 0%, #c084fc 30%, #a855f7 60%, #9333ea 100%);
+  --auth-card: rgba(255, 255, 255, 0.98); /* Card mais opaco para melhor contraste */
+  --auth-muted: #6b7280;
+}
+
+/* Shell principal das páginas com fundo cinza claro */
+.page-shell {
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  padding: clamp(20px, 3vw, 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5; /* Fundo cinza bem claro */
+  color: #ffffff; /* Texto branco sobre fundo gradiente */
+}
+
+/* Container principal com bordas arredondadas e gradiente roxo */
+.auth-container {
+  width: 100%;
+  max-width: 1400px;
+  min-height: calc(100vh - clamp(40px, 6vw, 80px));
+  border-radius: 24px;
+  background: var(--auth-gradient);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr; /* Esquerda maior que direita */
+  gap: 0;
+  overflow: hidden; /* Garante que o conteúdo respeite as bordas arredondadas */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); /* Sombra suave para destaque */
+}
+
+/* Para páginas de autenticação */
+.page-shell.auth-shell {
+  padding: clamp(20px, 3vw, 40px);
+}
+
+.content-area--flush .page-shell {
+  min-height: 100vh;
+}
+
+/* Container da esquerda (hero) integrado ao fundo */
+.auth-container > .page-hero {
+  padding: clamp(40px, 5vw, 80px) clamp(32px, 4vw, 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: transparent; /* Integrado ao fundo gradiente */
+}
+
+/* Container da direita (form card) - integrado ao layout */
+.auth-container > .page-card {
+  background: var(--auth-card);
+  border-radius: 0;
+  padding: clamp(40px, 5vw, 80px) clamp(32px, 4vw, 64px);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1); /* Sombra apenas à esquerda */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%; /* Garante que ocupe toda a altura do container */
+}
+
+/* Página de formulário de tarefas - layout dividido com fundo roxo */
+.page-shell.form-shell {
+  padding: clamp(32px, 6vw, 80px);
+  background: var(--auth-gradient); /* Fundo roxo gradiente */
+  display: grid;
+  grid-template-columns: 1fr 1.2fr; /* Hero à esquerda, card à direita (maior) */
+  gap: clamp(40px, 5vw, 80px); /* Espaçamento adequado entre hero e card */
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 100vh;
+}
+
+/* Hero na página de formulário - à esquerda */
+.page-shell.form-shell > .page-hero {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 560px;
+  padding-top: clamp(20px, 3vw, 40px); /* Espaçamento superior */
+}
+
+/* Card do formulário - à direita */
+.page-shell.form-shell > .page-card {
+  background: var(--auth-card);
+  border-radius: 32px;
+  padding: clamp(32px, 4vw, 48px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Logo e nome da marca dentro do hero (à esquerda) */
+.page-hero .auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  align-self: flex-start;
+}
+
+.auth-logo-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.auth-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Nome com gradiente igual ao navbar */
+.auth-logo-name {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(120deg, #7f56d9, #5ce1e6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.auth-logo-subtitle {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Seção hero com informações contextuais */
+.page-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 100%;
+}
+
+/* Hero específico para páginas de autenticação (dentro do auth-container) */
+.auth-container > .page-hero {
+  max-width: 100%;
+}
+
+/* Título do hero com texto branco e sombra para contraste */
+.page-hero h1 {
+  font-size: clamp(32px, 4vw, 46px);
+  line-height: 1.1;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.page-hero p {
+  color: rgba(255, 255, 255, 0.95); /* Texto branco com leve transparência */
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.hero-pill {
+  align-self: flex-start;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25); /* Mais opaco para melhor visibilidade */
+  font-weight: 600;
+  font-size: 13px;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.hero-list,
+.hero-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.9); /* Texto branco com leve transparência */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.hero-steps {
+  counter-reset: steps;
+}
+
+.hero-steps li {
+  counter-increment: steps;
+  position: relative;
+  padding-left: 32px;
+}
+
+.hero-steps li::before {
+  content: counter(steps);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.hero-metrics,
+.hero-stats {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.hero-metrics div,
+.hero-stat {
+  background: rgba(255, 255, 255, 0.2); /* Mais opaco para melhor visibilidade */
+  border-radius: 18px;
+  padding: 16px 20px;
+  min-width: 150px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borda sutil */
+}
+
+.hero-metrics strong,
+.hero-stat strong {
+  display: block;
+  font-size: 26px;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero-metrics span,
+.hero-stat span {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85); /* Texto branco com leve transparência */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Card principal com fundo branco sólido para melhor contraste */
+.page-card {
+  background: var(--auth-card);
+  color: #291b51;
+  border-radius: 32px;
+  padding: clamp(24px, 4vw, 38px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35); /* Sombra mais forte */
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Borda sutil para definição */
+}
+
+/* Card na página de formulário de tarefas - garante estilos corretos */
+.page-shell.form-shell > .page-card {
+  background: var(--auth-card);
+  border-radius: 32px;
+  padding: clamp(24px, 4vw, 38px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--auth-muted);
+  margin-bottom: 8px;
+}
+
+.muted {
+  color: #7a779d;
+}
+
+.mini-badge {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(127, 86, 217, 0.12);
+  color: #7f56d9;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.mini-link {
+  font-weight: 600;
+  color: #7f56d9;
+  text-decoration: none;
+}
+
+.page-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group.wide {
+  grid-column: 1 / -1;
+}
+
+.input-group span {
+  font-weight: 600;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.2s;
+  background: white;
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: #7f56d9;
+  box-shadow: 0 0 0 3px rgba(127, 86, 217, 0.1);
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox-field input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #7f56d9 0%, #9333ea 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(127, 86, 217, 0.25);
+}
+
+.primary-btn:hover:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(127, 86, 217, 0.35);
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.primary-btn.wide {
+  width: 100%;
+}
+
+/* Estilos minimalistas para campos do formulário */
+.required-asterisk {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.input-group.has-error input {
+  border-color: #ef4444;
+}
+
+.field-error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.validation-error {
+  margin-bottom: 20px;
+}
+
+.ghost-btn {
+  background: transparent;
+  color: #7f56d9;
+  border: 2px solid #7f56d9;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ghost-btn:hover:not(:disabled) {
+  background: rgba(127, 86, 217, 0.1);
+}
+
+.form-footer {
+  text-align: center;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.form-footer a {
+  color: #7f56d9;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+.info-banner {
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #fef2f2;
+  color: #991b1b;
+  border-left: 4px solid #ef4444;
+  font-size: 14px;
+}
+
+.info-banner.error {
+  background: #fef2f2;
+  color: #991b1b;
+  border-left-color: #ef4444;
+}
+
+/* Responsividade: em telas menores, empilha verticalmente */
+@media (max-width: 768px) {
+  .auth-container {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    border-radius: 16px;
+  }
+
+  .auth-container > .page-hero {
+    padding: clamp(32px, 5vw, 48px);
+    min-height: auto;
+  }
+
+  .auth-container > .page-card {
+    min-height: auto;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1); /* Sombra no topo quando empilhado */
+  }
+
+  /* Página de formulário de tarefas em mobile */
+  .page-shell.form-shell {
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 4vw, 40px);
+    padding: clamp(24px, 4vw, 40px);
+  }
+
+  .page-shell.form-shell > .page-hero {
+    padding-top: 0;
+  }
+}
+

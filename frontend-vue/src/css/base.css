@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #6a5cff;
+  --secondary: #74e3ff;
+  --bg: #f5f7ff;
+  --bg-soft: rgba(255,255,255,0.8);
+  --radius: 18px;
+  --shadow-soft: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: var(--bg);
+}
+
+:root {
+  --navbar-height: 80px;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Conteúdo */
+.content-area {
+  padding: 30px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.content-area--flush {
+  padding: 0;
+  display: flex;
+}
+
+.content-area--flush > * {
+  flex: 1;
+  min-height: inherit;
+}
