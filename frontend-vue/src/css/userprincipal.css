@@ -720,7 +720,7 @@ progress[value]::-webkit-progress-value {
 .table-head,
 .table-row {
   display: grid;
-  grid-template-columns: 2.4fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2.4fr 1fr 1fr 1fr 1fr 1fr 1fr;
   padding: 18px 24px;
   align-items: center;
   gap: 12px;
@@ -743,6 +743,12 @@ progress[value]::-webkit-progress-value {
 .task-title {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+
+.task-title small {
+  margin-left: 1em;
+  color: #666;
 }
 
 .status-pill {
@@ -774,24 +780,47 @@ progress[value]::-webkit-progress-value {
   overflow: hidden;
 }
 
-.progress-thumb {
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #ff9b9b, #f472b6);
+.table-row span:not(.status-pill):not(.task-priority) {
+  text-align: center;
 }
 
 .table-actions {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
+  align-items: center;
+}
+
+.table-actions a,
+.table-actions button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.table-actions a {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.table-actions a:hover {
+  background: rgba(59, 130, 246, 0.2);
 }
 
 .table-actions button {
-  border: none;
-  background: none;
-  color: #ef4444;
-  cursor: pointer;
-  font-weight: 600;
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.table-actions button:hover {
+  background: rgba(239, 68, 68, 0.2);
 }
 
 /* Estilos para tarefas atrasadas */

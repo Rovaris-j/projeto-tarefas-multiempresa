@@ -21,7 +21,7 @@
       <article class="dashboard-card wide">
         <div class="card-header">
           <h3>Tarefas da empresa</h3>
-          <span>{{ adminTasks.length }} tarefas</span>
+          <span>{{ filteredAdminTasks.length }} tarefas</span>
         </div>
         <div class="table-head compact">
           <span>Tarefa</span>
@@ -30,7 +30,7 @@
           <span>Prazo</span>
           <span>Progresso</span>
         </div>
-        <div v-for="task in adminTasks" :key="task.id" class="table-row compact">
+        <div v-for="task in filteredAdminTasks" :key="task.id" class="table-row compact">
           <div class="task-title">
             <strong>{{ task.title }}</strong>
             <small>{{ task.description || 'Sem descrição' }}</small>
@@ -45,7 +45,7 @@
             <small>{{ task.progress || 0 }}%</small>
           </div>
         </div>
-        <p v-if="!adminTasks.length" class="empty-state">Nenhuma tarefa cadastrada.</p>
+        <p v-if="!filteredAdminTasks.length" class="empty-state">Nenhuma tarefa cadastrada.</p>
       </article>
 
       <aside class="admin-sidebar">
@@ -119,13 +119,27 @@ export default {
     };
   },
   computed: {
-    ...mapState(['adminStats','adminTasks','companyUsers']),
+    ...mapState(['adminStats','adminTasks','companyUsers', 'taskSearch']),
+    filteredAdminTasks() {
+      const term = (this.taskSearch || '').trim().toLowerCase();
+      if (!term) return this.adminTasks;
+      return this.adminTasks.filter(task => {
+        const haystack = `${task.title || ''} ${task.description || ''}`.toLowerCase();
+        return haystack.includes(term);
+      });
+    },
     adminStatusCards(){
       if(!this.adminStats) return [];
+      const filtered = this.filteredAdminTasks;
+      const byStatus = filtered.reduce((acc, task) => {
+        const status = task.status === 'concluido' ? 'concluida' : task.status;
+        acc[status] = (acc[status] || 0) + 1;
+        return acc;
+      }, {});
       return [
-        { label:'Pendentes', value: this.adminStats.by_status?.pendente || 0, caption:'À iniciar' },
-        { label:'Em andamento', value: this.adminStats.by_status?.em_andamento || 0, caption:'Em execução' },
-        { label:'Concluídas', value: this.adminStats.by_status?.concluida || 0, caption:'Finalizadas' }
+        { label:'Pendentes', value: byStatus.pendente || 0, caption:'À iniciar' },
+        { label:'Em andamento', value: byStatus.em_andamento || 0, caption:'Em execução' },
+        { label:'Concluídas', value: byStatus.concluida || 0, caption:'Finalizadas' }
       ];
     },
     teamProgress(){

@@ -258,7 +258,7 @@ export default new Vuex.Store({
     
     /**
      * Tarefas: Busca lista de tarefas do usuário
-     * @param {Object} filters - Filtros opcionais (status, priority)
+     * @param {Object} filters - Filtros opcionais (status, priority, search)
      */
     async fetchTasks({ commit }, filters = {}) {
       const res = await api.get('/tasks', { params: filters })

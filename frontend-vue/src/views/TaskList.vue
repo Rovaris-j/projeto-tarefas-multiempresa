@@ -28,7 +28,7 @@
     <!-- Tabela de tarefas -->
     <section class="tasks-table">
       <div class="table-head">
-        <span>Tarefa</span>
+        <span>Tarefas</span>
         <span>Status</span>
         <span>Prioridade</span>
         <span>Prazo</span>
@@ -90,17 +90,34 @@ import { mapState, mapActions } from 'vuex';
 export default {
   data(){ return { error:null, loading:false }; },
   computed: {
-    ...mapState(['tasks','taskSearch']),
+    ...mapState(['tasks']),
     
-    // Filtra tarefas: últimas 7 dias, atrasadas, ou inconcluídas desde o começo
+    taskSearch() {
+      return this.$store.state.taskSearch;
+    },
+    
+    // Filtra tarefas: se houver busca, mostra todas as encontradas; senão, aplica filtro de visibilidade
     visibleTasks(){
       const now = new Date();
       const sevenDaysAgo = new Date(now);
       sevenDaysAgo.setDate(now.getDate() - 7);
       sevenDaysAgo.setHours(0, 0, 0, 0);
-      
-      // Filtra tarefas que devem aparecer
-      let filtered = this.tasks.filter(task => {
+
+      // Aplica busca em todas as tarefas
+      let filtered = this.tasks;
+      const term = (this.$store.state.taskSearch || '').trim().toLowerCase();
+      console.log('TaskList visibleTasks term:', term, 'tasks:', this.tasks.length);
+      if (term) {
+        filtered = this.tasks.filter(task => {
+          const haystack = `${task.title || ''} ${task.description || ''}`.toLowerCase();
+          return haystack.includes(term);
+        });
+        console.log('TaskList filtered to:', filtered.length);
+        return filtered; // Quando buscando, mostra todas as encontradas, sem filtro de visibilidade
+      }
+
+      // Senão, aplica filtro de visibilidade
+      filtered = this.tasks.filter(task => {
         const status = task.status === 'concluido' ? 'concluida' : task.status;
         const taskDate = new Date(task.created_at || task.updated_at);
         taskDate.setHours(0, 0, 0, 0);
@@ -117,15 +134,6 @@ export default {
         
         return false;
       });
-      
-      // Aplica busca se houver termo de pesquisa
-      const term = (this.taskSearch || '').trim().toLowerCase();
-      if(term) {
-        filtered = filtered.filter(task => {
-          const haystack = `${task.title || ''} ${task.description || ''}`.toLowerCase();
-          return haystack.includes(term);
-        });
-      }
       
       return filtered;
     },

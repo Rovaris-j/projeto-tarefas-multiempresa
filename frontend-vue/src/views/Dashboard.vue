@@ -121,7 +121,20 @@ export default {
     };
   },
   computed: {
-    ...mapState(['tasks', 'user', 'company']),
+    ...mapState(['tasks', 'user', 'company', 'taskSearch']),
+    
+    // Tarefas filtradas pela busca global
+    filteredTasks() {
+      const term = (this.$store.state.taskSearch || '').trim().toLowerCase();
+      console.log('Dashboard filteredTasks term:', term, 'tasks:', this.tasks.length);
+      if (!term) return this.tasks;
+      const filtered = this.tasks.filter(task => {
+        const haystack = `${task.title || ''} ${task.description || ''}`.toLowerCase();
+        return haystack.includes(term);
+      });
+      console.log('Filtered to:', filtered.length);
+      return filtered;
+    },
     
     // Nome do usuário atual (primeiro nome)
     currentUserName() {
@@ -142,7 +155,7 @@ export default {
       ];
       return base.map(item => ({
         ...item,
-        value: this.tasks.filter(task => {
+        value: this.filteredTasks.filter(task => {
           // Normaliza status para compatibilidade (concluido -> concluida)
           const status = task.status === 'concluido' ? 'concluida' : task.status;
           return status === item.key;
@@ -159,13 +172,13 @@ export default {
       ];
       return base.map(item => ({
         ...item,
-        value: this.tasks.filter(task => task.priority === item.key).length
+        value: this.filteredTasks.filter(task => task.priority === item.key).length
       }));
     },
     
     // Lista de próximas tarefas ordenadas por prazo
     upcomingTasks() {
-      return [...this.tasks]
+      return [...this.filteredTasks]
         .filter(task => !!task.due_date)
         .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
         .slice(0, 4);
@@ -190,7 +203,7 @@ export default {
         const iso = cellDate.toISOString().split('T')[0];
         
         // Filtra tarefas que têm prazo neste dia
-        const tasks = this.tasks.filter(task => {
+        const tasks = this.filteredTasks.filter(task => {
           if (!task.due_date) return false;
           const taskDate = new Date(task.due_date).toISOString().split('T')[0];
           return taskDate === iso;
@@ -211,7 +224,7 @@ export default {
     // Tarefas do dia selecionado no calendário
     selectedDayTasks() {
       if (!this.selectedDate) return [];
-      return this.tasks.filter(task => task.due_date === this.selectedDate);
+      return this.filteredTasks.filter(task => task.due_date === this.selectedDate);
     },
     
     // Label formatado do dia selecionado

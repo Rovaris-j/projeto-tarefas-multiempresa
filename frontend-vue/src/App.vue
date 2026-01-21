@@ -25,14 +25,14 @@
         </ul>
 
         <!-- Busca global de tarefas (sincronizada com Vuex) -->
-        <label class="navbar-search">
+        <div class="navbar-search">
           <span class="search-icon" aria-hidden="true"></span>
           <input
             v-model="searchTerm"
             type="text"
             placeholder="Buscar tarefas, squads ou projetos"
           />
-        </label>
+        </div>
       </div>
 
       <!-- Ações rápidas e perfil do usuário -->
@@ -132,6 +132,7 @@ export default {
         return this.$store.state.taskSearch;
       },
       set(value) {
+        console.log('Setting searchTerm:', value);
         this.$store.commit('setTaskSearch', value);
       }
     },
